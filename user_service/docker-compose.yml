@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  postgres-user:
+    image: postgres:15
+    container_name: pg-user
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: userdb
+    ports: ["5433:5432"]
+    volumes: ["pg-user-data:/var/lib/postgresql/data"]
+
+  postgres-product:
+    image: postgres:15
+    container_name: pg-product
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: productdb
+    ports: ["5434:5432"]
+    volumes: ["pg-product-data:/var/lib/postgresql/data"]
+
+  user-service:
+    build: ./user-service
+    env_file: ./user-service/.env
+    ports: ["8080:8080"]
+    depends_on: [postgres-user]
+
+  product-service:
+    build: ./product-service
+    env_file: ./product-service/.env
+    ports: ["8081:8081"]
+    depends_on: [postgres-product]
+
+volumes:
+  pg-user-data:
+  pg-product-data:

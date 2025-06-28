@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package auth.v1;
+
+option go_package = "genproto/auth/v1;authv1";
+
+service AuthService {
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc VerifyToken (VerifyTokenRequest) returns (VerifyTokenResponse);
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+}
+
+message VerifyTokenRequest {
+  string token = 1;
+}
+
+message VerifyTokenResponse {
+  uint64 user_id = 1;
+  bool valid = 2;
+}

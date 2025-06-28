@@ -1,0 +1,21 @@
+syntax = "proto3";
+package product.v1;
+option go_package = "genproto/product/v1;productv1";
+
+service ProductService {
+  rpc ListProducts (ListProductsRequest) returns (ListProductsResponse) {}
+}
+
+message ListProductsRequest {}
+
+message ProductDTO {
+  uint64 id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  int32 stock = 5;
+}
+
+message ListProductsResponse {
+  repeated ProductDTO products = 1;
+}
